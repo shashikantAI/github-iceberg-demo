@@ -1,0 +1,21 @@
+name: roz-subah-9-baje
+on:
+  schedule:
+    - cron: "30 3 * * *"   # 09:00 IST, roz
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  kaam:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: kaam karo
+        run: |
+          echo "$(TZ=Asia/Kolkata date '+%d %b %Y %H:%M IST') - GitHub ne khud chala diya" >> log.txt
+          tail -5 log.txt
+      - name: save
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add log.txt && git commit -m "roz ka kaam" && git push
